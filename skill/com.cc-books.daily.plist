@@ -8,7 +8,7 @@
     <array>
         <string>/bin/bash</string>
         <string>-c</string>
-        <string>$HOME/開発/cc-books/skill/daily-cron.sh</string>
+        <string>/Users/satousuguru/開発/flipbook-ui/skill/daily-cron.sh</string>
     </array>
     <key>StartCalendarInterval</key>
     <dict>

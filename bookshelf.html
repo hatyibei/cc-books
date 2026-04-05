@@ -239,40 +239,24 @@
 
 <script>
 // ═══════════════════════════════════════
-// BOOK DATA
+// BOOK DATA (loaded from books.json)
 // ═══════════════════════════════════════
-const allBooks=[
-  {id:'0405',file:true,title:'2026年4月5日',date:'2026-04-05',day:'土',sessions:9,color:0,
-   chapters:['ブラウザでFPSを作ってみた','Claude Code環境を可視化したい','FlipBook UIを作ってOSS化した','VPS設定の確認と振り返り'],
-   pages:[
-    {front:`<div class="cover-front" style="background:linear-gradient(145deg,#1a1520,#2a1f30,#1e1828,#0f0d14);"><div class="cover-ornament">&#9671; &#9671; &#9671;</div><div style="font-size:13px;color:#8a7050;letter-spacing:4px;margin-bottom:12px;">DAILY FLIPBOOK</div><div class="cover-title">2026年4月5日</div><div class="cover-subtitle">── Today I Learned ──</div><div style="width:80px;height:1px;background:linear-gradient(to right,transparent,#D97B2F,transparent);margin:24px 0;"></div><div style="color:#b89868;font-size:13px;letter-spacing:2px;">9 sessions / Saturday</div><div class="cover-ornament">&#9671; &#9671; &#9671;</div></div>`,back:`<div class="page-number">ii</div><div style="flex:1;display:flex;flex-direction:column;justify-content:center;"><p style="color:#8a7a68;font-size:14px;letter-spacing:3px;margin-bottom:16px;text-align:center;">今日のサマリー</p><div class="divider" style="margin:10px 0;">─</div><p style="color:#4a4038;font-size:15px;line-height:2.1;">今日は盛りだくさんだった。FPSゲームを作ったり、Claude Codeの環境を可視化するダッシュボードを構想したり。</p><p style="color:#4a4038;font-size:15px;line-height:2.1;">中でも一番の成果は<strong>FlipBook UI</strong>。ドラッグでめくれる本のUIを作り、OSSとしてGitHubに公開するところまでいった。</p></div>`,leftContent:`<div class="cover-left" style="background:linear-gradient(to right,#1e1828,#1a1520);"><div class="spine-text">2026年4月5日の記録</div></div>`},
-    {front:`<div class="page-number">1</div><div class="chapter-label">第一章</div><div class="page-title">ブラウザでFPSを<br>作ってみた</div><div class="divider">&#9671; &#9671; &#9671;</div><div class="page-body"><p class="dropcap">朝イチのセッションで「FPS作ってみて！」と指示を出した。フロントエンドデザインスキルを使って、ブラウザ上で動くFPSゲームが生成された。</p><p>最初のバージョンは暗すぎたので「もっとリアルにして、あと暗すぎる」とフィードバック。</p><div class="quote">「すごいエネ！」って思わず言ったくらい、AIのコード生成がエグいレベルになってる。</div></div><div class="flip-hint">ドラッグでめくる &#10148;</div>`,back:`<div class="page-number">2</div><div class="page-body"><p>ゲーム自体は遊ぶことが目的じゃなくて、<strong>「Claude Codeでどこまで作れるか」を見たかった</strong>のが本音。</p><div class="tip-box"><div class="tip-title">学び</div><ul><li>最初の出力で完璧を求めない。まず出して、フィードバックで磨く</li><li>感覚的フィードバックも、AIはちゃんと汲み取る</li><li>ブラウザ技術だけでかなりリッチなものが作れる</li></ul></div></div>`,leftContent:`<div class="page-number">ii</div><div style="flex:1;display:flex;flex-direction:column;justify-content:center;"><p style="color:#4a4038;font-size:15px;line-height:2.1;">中でも一番の成果は<strong>FlipBook UI</strong>。OSSとしてGitHubに公開するところまでいった。</p></div>`},
-    {front:`<div class="page-number">3</div><div class="chapter-label">第二章</div><div class="page-title">FlipBook UIを<br>作ってOSS化した</div><div class="divider">&#9671; &#9671; &#9671;</div><div class="page-body"><p class="dropcap">今日のメインイベント。「本ペラペラめくるUI作れる？」から始まって、最終的にGitHubにOSSとして公開するところまでいった。</p><div class="timeline-item">CSS 3D transformsでページめくりの基本実装</div><div class="timeline-item">コンテンツを日本語に、サイズを大きく調整</div><div class="timeline-item">Web Audio APIでめくり音を合成</div><div class="timeline-item">マウスドラッグで途中停止できる操作を実装</div><div class="timeline-item">OSSとしてGitHub publicに公開</div></div><div class="flip-hint">ドラッグでめくる &#10148;</div>`,back:`<div class="page-number">4</div><div class="page-body"><p>特に面白かったのが<strong>ドラッグめくり</strong>の実装。50度を超えたら完了、それ以下ならバネで戻す。</p><div class="code-block"><div class="code-label">核心部分</div><span class="keyword">if</span> (absAngle > threshold) {\n  <span class="comment">// 50度超え → めくり完了</span>\n  <span class="property">playFlipSound</span>();\n} <span class="keyword">else</span> {\n  <span class="comment">// バネで戻る</span>\n}</div><p>さらに<code>/daily-flipbook</code>スキルを作成。セッションログから自動で本を生成する仕組み。</p><div class="divider">&#9671; &ensp; &#9671; &ensp; &#9671;</div><p style="text-align:center;color:#D97B2F;font-size:14px;font-weight:700;">AIは「使う」ものじゃない。<br>「一緒に働く」ものだ。</p><div class="divider">── FIN ──</div></div>`,leftContent:`<div class="page-number">2</div><div class="page-body"><div class="tip-box"><div class="tip-title">学び</div><ul><li>最初の出力で完璧を求めない</li><li>感覚的フィードバックもAIは汲み取る</li><li>ブラウザ技術だけでリッチなものが作れる</li></ul></div></div>`}
-  ]},
-  {id:'0404',file:true,title:'2026年4月4日',date:'2026-04-04',day:'金',sessions:25,color:1,
-   chapters:['OSS公開を真剣に検討した日','新しい書籍企画が2本同時に','Gemma 4をローカルで動かしてみた','25セッションの金曜日'],
-   pages:[
-    {front:`<div class="cover-front" style="background:linear-gradient(145deg,#1a2030,#1e2a40,#162038,#0f1520);"><div class="cover-ornament">&#9671; &#9671; &#9671;</div><div style="font-size:13px;color:#5888b0;letter-spacing:4px;margin-bottom:12px;">DAILY FLIPBOOK</div><div class="cover-title" style="color:#8ab8e0;">2026年4月4日</div><div class="cover-subtitle" style="color:#6090b0;">── Today I Learned ──</div><div style="width:80px;height:1px;background:linear-gradient(to right,transparent,#5888b0,transparent);margin:24px 0;"></div><div style="color:#6090b0;font-size:13px;letter-spacing:2px;">25 sessions / Friday</div><div class="cover-ornament" style="color:#5888b0;">&#9671; &#9671; &#9671;</div></div>`,back:`<div class="page-number">ii</div><div style="flex:1;display:flex;flex-direction:column;justify-content:center;"><p style="color:#8a7a68;font-size:14px;letter-spacing:3px;margin-bottom:16px;text-align:center;">今日のサマリー</p><div class="divider" style="margin:10px 0;">─</div><p style="color:#4a4038;font-size:15px;line-height:2.1;">圧倒的な量のセッションをこなした1日。OSS公開の検討、新しい書籍企画2本、Gemma 4のローカル導入まで。</p><p style="color:#4a4038;font-size:15px;line-height:2.1;">この日のキーワードは<strong>「全部やる」</strong>。</p></div>`,leftContent:`<div class="cover-left" style="background:linear-gradient(to right,#162038,#1a2030);"><div class="spine-text">2026年4月4日の記録</div></div>`},
-    {front:`<div class="page-number">1</div><div class="chapter-label">第一章</div><div class="page-title">OSS公開を<br>真剣に検討した日</div><div class="divider">&#9671; &#9671; &#9671;</div><div class="page-body"><p class="dropcap">「これ、普通にOSSで公開しようかと思ってた」── 自分が作ったツールを世に出す決断。何度もセッションを重ねて確認した。</p><div class="quote">OSSにするかどうかの判断基準は「自分が欲しかったものを、他の人も欲しがるか」。答えがYesなら出す。</div></div><div class="flip-hint">ドラッグでめくる &#10148;</div>`,back:`<div class="page-number">2</div><div class="page-body"><p>結局この日は検討で終わって、翌日（4/5）に実際に公開した。<strong>1日寝かせて判断する</strong>のは大事。</p><div class="tip-box"><div class="tip-title">OSSチェックリスト</div><ul><li>機密情報が含まれていないか</li><li>READMEは初見の人が理解できるか</li><li>ライセンスは明示されているか</li><li>依存関係が少ないか</li></ul></div></div>`,leftContent:`<div class="page-number">ii</div><div style="flex:1;display:flex;flex-direction:column;justify-content:center;"><p style="color:#4a4038;font-size:15px;line-height:2.1;">この日のキーワードは<strong>「全部やる」</strong>。25セッション。</p></div>`},
-    {front:`<div class="page-number">3</div><div class="chapter-label">第二章</div><div class="page-title">Gemma 4を<br>ローカルで動かした</div><div class="divider">&#9671; &#9671; &#9671;</div><div class="page-body"><p class="dropcap">「Gemma 4ってこのMacで動けそうな頭いいやつどれ？」── ローカルLLMへの興味が爆発した瞬間。</p><div class="code-block"><span class="keyword">ollama</span> pull gemma4:27b\n<span class="keyword">ollama</span> pull gemma4:12b\n<span class="keyword">ollama</span> run gemma4:27b <span class="string">"Hello"</span></div><p>プライバシーが気になるデータの処理や、ネットがない環境での作業には十分使える。</p></div><div class="flip-hint">ドラッグでめくる &#10148;</div>`,back:`<div class="page-number">4</div><div class="page-body"><div class="tip-box"><div class="tip-title">今日の学び</div><ul><li>OSS公開は1日寝かせてから判断がいい</li><li>書籍企画はMTG直後にAgent Teamでリサーチ→叩き台30分</li><li>ローカルLLMはプライバシーデータの処理に使える</li><li>25セッション/日は全部意味のある作業だった</li></ul></div><div class="divider">&#9671; &ensp; &#9671; &ensp; &#9671;</div><p style="text-align:center;color:#5888b0;font-size:14px;font-weight:700;">やりたいことが多すぎる日は、<br>AIに任せて全部やる。</p><div class="divider">── FIN ──</div></div>`,leftContent:`<div class="page-number">2</div><div class="page-body"><p>結局この日は検討で終わって、翌日に実際に公開した。<strong>1日寝かせて判断する</strong>のは大事。</p></div>`}
-  ]},
-  {id:'0403',file:false,title:'2026年4月3日',date:'2026-04-03',day:'木',sessions:5,color:2,chapters:['大和書房MTG振り返り','書籍構成案ブレスト','AI顧問レポート作成','Slack Bot改修'],pages:[]},
-  {id:'0402',file:false,title:'2026年4月2日',date:'2026-04-02',day:'水',sessions:11,color:3,chapters:['天秤AI記事3本納品','MCP新規サーバー構築','メモリシステム蒸留','Discord Digest自動化','請求書バッチ生成'],pages:[]},
-  {id:'0401',file:false,title:'2026年4月1日',date:'2026-04-01',day:'火',sessions:6,color:4,chapters:['新年度キックオフ','メンバー1on1準備','ENEOS研修資料更新','note自動出稿テスト'],pages:[]},
-  {id:'0331',file:false,title:'2026年3月31日',date:'2026-03-31',day:'月',sessions:8,color:5,chapters:['月末レポート作成','X投稿パイプライン改善','Genspark請求書発行','VPSセキュリティ監査'],pages:[]},
-  {id:'0330',file:false,title:'2026年3月30日',date:'2026-03-30',day:'日',sessions:4,color:6,chapters:['LP改修','ConoHaデプロイ自動化','競合分析まとめ'],pages:[]},
-  {id:'0329',file:false,title:'2026年3月29日',date:'2026-03-29',day:'土',sessions:6,color:7,chapters:['バズ投稿分析200件','suguru-voice構文研究','Typefully CLI改修','動画→スレッド自動化'],pages:[]},
-  {id:'0328',file:false,title:'2026年3月28日',date:'2026-03-28',day:'金',sessions:9,color:8,chapters:['SBクリエイティブ連載','日経記事下書き','AIGC研修スライド更新','Notion DB整理','Linear自動タスク検出'],pages:[]},
-  {id:'0327',file:false,title:'2026年3月27日',date:'2026-03-27',day:'木',sessions:7,color:9,chapters:['研修準備','プロンプト集更新','Midjourney連携テスト','コミュニティ配信準備'],pages:[]},
-  {id:'0326',file:false,title:'2026年3月26日',date:'2026-03-26',day:'水',sessions:5,color:10,chapters:['教育機関フォローアップ','助成金書類レビュー','Peatixイベント作成'],pages:[]},
-  {id:'0325',file:false,title:'2026年3月25日',date:'2026-03-25',day:'火',sessions:10,color:11,chapters:['Claude Codeメモリv2設計','蒸留プロセス実装','feedbackカテゴリ整理','MEMORY.md自動更新'],pages:[]},
-  {id:'0324',file:false,title:'2026年3月24日',date:'2026-03-24',day:'月',sessions:6,color:12,chapters:['週次レポート生成','Slack通知整理','tldv議事録処理','パートナー管理更新'],pages:[]},
-  {id:'0323',file:false,title:'2026年3月23日',date:'2026-03-23',day:'日',sessions:3,color:13,chapters:['事業MTG','収益分配設計','価格戦略ブレスト'],pages:[]},
-  {id:'0322',file:false,title:'2026年3月22日',date:'2026-03-22',day:'土',sessions:8,color:14,chapters:['X口調プロファイル分析','3,900メッセージ解析','voice profile作成','バズ構文テンプレート化'],pages:[]}
-];
-
-let books=[...allBooks];
+let allBooks=[];
+let books=[];
 let currentSort='date-desc';
+
+async function loadBooks(){
+  try {
+    const res = await fetch('books.json');
+    allBooks = await res.json();
+  } catch(e) {
+    // Fallback: if fetch fails (e.g. file:// protocol), show empty state
+    console.warn('books.json not found, starting empty. Use a local server: npx serve .');
+    allBooks = [];
+  }
+  books=[...allBooks];
+  renderShelf();
+}
 
 // ═══════════════════════════════════════
 // SHELF RENDERING
@@ -545,7 +529,7 @@ document.addEventListener('mousemove',e=>{
   cs.style.transform=`rotateX(${2-y*1.5}deg) rotateY(${x*2.5}deg)`;
 });
 
-renderShelf();
+loadBooks();
 </script>
 </body>
 </html>

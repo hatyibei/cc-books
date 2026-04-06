@@ -52,7 +52,7 @@ for search_path in "${CLAUDE_PATHS[@]}"; do
     if command -v jq &>/dev/null; then
       user_msgs=$(jq -r '
         select(.type == "user")
-        | .message
+        | .message.content
         | if type == "array" then
             map(select(.type == "text") | .text) | join(" ")
           elif type == "string" then .
@@ -63,7 +63,7 @@ for search_path in "${CLAUDE_PATHS[@]}"; do
 
       tool_actions=$(jq -r '
         select(.type == "assistant")
-        | .message[]?
+        | .message.content[]?
         | select(.type == "tool_use")
         | "\(.name): \(.input.file_path // .input.command // .input.pattern // "" | .[0:100])"
       ' "$logfile" 2>/dev/null | head -30)

@@ -53,7 +53,7 @@ for search_path in "${CLAUDE_PATHS[@]}"; do
   while IFS= read -r logfile; do
     [ -z "$logfile" ] && continue
 
-    msgs=$(jq -r 'select(.type == "user") | .message | if type == "array" then map(select(.type == "text") | .text) | join(" ") elif type == "string" then . else empty end | .[0:200]' "$logfile" 2>/dev/null | grep -v "^$" | grep -v "^<" | head -8)
+    msgs=$(jq -r 'select(.type == "user") | .message.content | if type == "array" then map(select(.type == "text") | .text) | join(" ") elif type == "string" then . else empty end | .[0:200]' "$logfile" 2>/dev/null | grep -v "^$" | grep -v "^<" | head -8)
 
     if [ -n "$msgs" ]; then
       SESSION_COUNT=$((SESSION_COUNT + 1))
